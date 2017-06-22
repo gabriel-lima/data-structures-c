@@ -40,12 +40,10 @@ bool elementAt(Node *head, int indexToFind, int **value)
         {
             *value = (int *)malloc(sizeof(int));
             *(*value) = current->value;
-            // return current->value;
             return true;
         }
     }
     return false;
-    // return -1;
 }
 
 void insertInFront(Node **head, int value)

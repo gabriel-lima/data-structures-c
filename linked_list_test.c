@@ -118,7 +118,13 @@ static void test_element_at_when_index_not_found(void)
 
     assert(false == found);
 }
-static void test_element_at_when_list_is_null(void){}
+static void test_element_at_when_list_is_null(void)
+{
+    int *value = NULL;
+    bool found = elementAt(head, -1, &value);
+
+    assert(false == found);
+}
 
 static void test_insert_one_value(void)
 {
