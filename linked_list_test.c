@@ -7,6 +7,10 @@
 static void test_display_values(void);
 static void test_display_when_is_empty(void);
 
+static void test_element_at_return_value_by_index(void);
+static void test_element_at_when_index_not_found(void);
+static void test_element_at_when_list_is_null(void);
+
 static void test_insert_one_value(void);
 static void test_insert_value_in_front(void);
 
@@ -27,6 +31,16 @@ int main(void)
     free(head);
     head = NULL;
     test_display_when_is_empty();
+    free(head);
+    head = NULL;
+
+    test_element_at_return_value_by_index();
+    free(head);
+    head = NULL;
+    test_element_at_when_index_not_found();
+    free(head);
+    head = NULL;
+    test_element_at_when_list_is_null();
     free(head);
     head = NULL;
 
@@ -82,6 +96,29 @@ static void test_display_when_is_empty(void)
 
     assert(0 == length(head));
 }
+
+static void test_element_at_return_value_by_index(void)
+{
+    insertInFront(&head, 10);
+    insertInFront(&head, 20);
+
+    int *value = NULL;
+    bool found = elementAt(head, 1, &value);
+
+    assert(true == found);
+    assert(10 == *value);
+}
+static void test_element_at_when_index_not_found(void)
+{
+    insertInFront(&head, 10);
+    insertInFront(&head, 20);
+
+    int *value = NULL;
+    bool found = elementAt(head, -1, &value);
+
+    assert(false == found);
+}
+static void test_element_at_when_list_is_null(void){}
 
 static void test_insert_one_value(void)
 {
