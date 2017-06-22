@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "linked_list.h"
-#include <stdio.h>
 
 int length(Node *head)
 {
@@ -34,7 +33,9 @@ int *display(Node *head)
 bool elementAt(Node *head, int indexToFind, int **value)
 {
     int index = 0;
-    for (Node *current = head; current != NULL; current = current->next, index++)
+    for (Node *current = head;
+         current != NULL;
+         current = current->next, index++)
     {
         if (index == indexToFind)
         {

@@ -22,54 +22,38 @@ static void test_delete_first_node_by_index(void);
 static void test_delete_when_index_not_found(void);
 static void test_delete_by_index_when_list_is_null(void);
 
+const int NUMBER_OF_FUNCTIONS = 13;
+void (*functions[NUMBER_OF_FUNCTIONS])(void);
+
 Node *head = NULL;
+static void tearDown()
+{
+    free(head);
+    head = NULL;
+}
 
 // to run: gcc -std=c99 -Wall linked_list_test.c linked_list.c -o linked_list_test && ./linked_list_test
 int main(void)
 {
-    test_display_values();
-    free(head);
-    head = NULL;
-    test_display_when_is_empty();
-    free(head);
-    head = NULL;
+    functions[0] = test_display_values;
+    functions[1] = test_display_when_is_empty;
+    functions[2] = test_element_at_return_value_by_index;
+    functions[3] = test_element_at_when_index_not_found;
+    functions[4] = test_element_at_when_list_is_null;
+    functions[5] = test_insert_one_value;
+    functions[6] = test_insert_value_in_front;
+    functions[7] = test_delete_the_first_node;
+    functions[8] = test_delete_when_list_is_null;
+    functions[9] = test_delete_last_node_by_index;
+    functions[10] = test_delete_first_node_by_index;
+    functions[11] = test_delete_when_index_not_found;
+    functions[12] = test_delete_by_index_when_list_is_null;
 
-    test_element_at_return_value_by_index();
-    free(head);
-    head = NULL;
-    test_element_at_when_index_not_found();
-    free(head);
-    head = NULL;
-    test_element_at_when_list_is_null();
-    free(head);
-    head = NULL;
-
-    test_insert_one_value();
-    free(head);
-    head = NULL;
-    test_insert_value_in_front();
-    free(head);
-    head = NULL;
-
-    test_delete_the_first_node();
-    free(head);
-    head = NULL;
-    test_delete_when_list_is_null();
-    free(head);
-    head = NULL;
-
-    test_delete_last_node_by_index();
-    free(head);
-    head = NULL;
-    test_delete_first_node_by_index();
-    free(head);
-    head = NULL;
-    test_delete_when_index_not_found();
-    free(head);
-    head = NULL;
-    test_delete_by_index_when_list_is_null();
-    free(head);
-    head = NULL;
+    for (int current = 0; current < NUMBER_OF_FUNCTIONS; current++)
+    {
+        (*functions[current])();
+        tearDown();
+    }
 
     return 0;
 }
