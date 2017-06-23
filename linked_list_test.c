@@ -25,7 +25,7 @@ static void test_delete_by_index_when_list_is_null(void);
 const int NUMBER_OF_FUNCTIONS = 13;
 void (*functions[NUMBER_OF_FUNCTIONS])(void);
 
-Node *head = NULL;
+SinglyLinkedList *head = NULL;
 static void tearDown()
 {
     free(head);
@@ -60,10 +60,10 @@ int main(void)
 
 static void test_display_values(void)
 {
-    Node *nextNode = malloc(sizeof(Node));
+    SinglyLinkedList *nextNode = malloc(sizeof(SinglyLinkedList));
     nextNode->value = 20;
     nextNode->next = NULL;
-    head = malloc(sizeof(Node));
+    head = malloc(sizeof(SinglyLinkedList));
     head->value = 10;
     head->next = nextNode;
 

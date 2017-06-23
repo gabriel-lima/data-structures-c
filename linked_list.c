@@ -2,10 +2,10 @@
 #include <stdbool.h>
 #include "linked_list.h"
 
-int length(Node *head)
+int length(SinglyLinkedList *head)
 {
     int size = 0;
-    for (Node *current = head;
+    for (SinglyLinkedList *current = head;
          current != NULL;
          current = current->next)
     {
@@ -14,13 +14,13 @@ int length(Node *head)
     return size;
 }
 
-int *display(Node *head)
+int *display(SinglyLinkedList *head)
 {
     int size = length(head);
     int *output = malloc(size * sizeof(int));
     int index = 0;
 
-    for (Node *current = head;
+    for (SinglyLinkedList *current = head;
          current != NULL;
          current = current->next, index++)
     {
@@ -30,10 +30,10 @@ int *display(Node *head)
     return output;
 }
 
-bool elementAt(Node *head, int indexToFind, int **value)
+bool elementAt(SinglyLinkedList *head, int indexToFind, int **value)
 {
     int index = 0;
-    for (Node *current = head;
+    for (SinglyLinkedList *current = head;
          current != NULL;
          current = current->next, index++)
     {
@@ -47,21 +47,21 @@ bool elementAt(Node *head, int indexToFind, int **value)
     return false;
 }
 
-void insertInFront(Node **head, int value)
+void insertInFront(SinglyLinkedList **head, int value)
 {
-    Node *newNode = malloc(sizeof(Node));
+    SinglyLinkedList *newNode = malloc(sizeof(SinglyLinkedList));
     newNode->value = value;
     newNode->next = *head;
 
     *head = newNode;
 }
 
-bool deleteInFront(Node **head)
+bool deleteInFront(SinglyLinkedList **head)
 {
     if (*head == NULL)
         return false;
 
-    Node *first = *head;
+    SinglyLinkedList *first = *head;
 
     *head = first->next;
 
@@ -71,12 +71,12 @@ bool deleteInFront(Node **head)
     return true;
 }
 
-bool deleteByIndex(Node **head, int indexToDelete)
+bool deleteByIndex(SinglyLinkedList **head, int indexToDelete)
 {
     int index = 0;
     bool found = false;
-    Node *previous = NULL;
-    Node *current = *head;
+    SinglyLinkedList *previous = NULL;
+    SinglyLinkedList *current = *head;
 
     while (current != NULL)
     {
