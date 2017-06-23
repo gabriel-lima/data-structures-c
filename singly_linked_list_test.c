@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <stdbool.h>
-#include "linked_list.h"
+#include "singly_linked_list.h"
 
 static void test_display_values(void);
 static void test_display_when_is_empty(void);
@@ -32,7 +32,7 @@ static void tearDown()
     head = NULL;
 }
 
-// to run: gcc -std=c99 -Wall linked_list_test.c linked_list.c -o linked_list_test && ./linked_list_test
+// to run: gcc -std=c99 -Wall singly_linked_list_test.c singly_linked_list.c -o singly_linked_list_test && ./singly_linked_list_test
 int main(void)
 {
     functions[0] = test_display_values;

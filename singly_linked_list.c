@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
-#include "linked_list.h"
+#include "singly_linked_list.h"
 
 int length(SinglyLinkedList *head)
 {
