@@ -1,14 +1,20 @@
 #include <stdbool.h>
 
-typedef struct SinglyLinkedList
+typedef struct Node
 {
-    struct SinglyLinkedList *next;
+    struct Node *previous;
+    struct Node *next;
     int value;
-} SinglyLinkedList;
+} Node;
 
-int length(SinglyLinkedList *head);
-int *display(SinglyLinkedList *head);
-bool elementAt(SinglyLinkedList *head, int indexToFind, int **value);
-void insertInFront(SinglyLinkedList **head, int value);
-bool deleteInFront(SinglyLinkedList **head);
-bool deleteByIndex(SinglyLinkedList **head, int indexToDelete);
+typedef struct LinkedList
+{
+    int length;
+    struct Node *first;
+} LinkedList;
+
+LinkedList *newLinkedList();
+void removeLinkedList(LinkedList *list);
+LinkedList *insertNode(LinkedList *list, int value);
+Node *elementAt(LinkedList *list, int indexToFind);
+LinkedList *removeNode(LinkedList *list);

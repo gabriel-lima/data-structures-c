@@ -2,105 +2,64 @@
 #include <stdbool.h>
 #include "singly_linked_list.h"
 
-int length(SinglyLinkedList *head)
+LinkedList *newLinkedList()
 {
-    int size = 0;
-    for (SinglyLinkedList *current = head;
-         current != NULL;
-         current = current->next)
-    {
-        size++;
-    }
-    return size;
+    LinkedList *list = malloc(sizeof(LinkedList));
+    list->length = 0;
+    list->first = NULL;
+
+    return list;
 }
 
-int *display(SinglyLinkedList *head)
+void removeLinkedList(LinkedList *list)
 {
-    int size = length(head);
-    int *output = malloc(size * sizeof(int));
-    int index = 0;
-
-    for (SinglyLinkedList *current = head;
-         current != NULL;
-         current = current->next, index++)
-    {
-        output[index] = current->value;
-    }
-
-    return output;
+    free(list);
 }
 
-bool elementAt(SinglyLinkedList *head, int indexToFind, int **value)
+LinkedList *insertNode(LinkedList *list, int value)
 {
+    if (list == NULL)
+        return NULL;
+
+    Node *new = malloc(sizeof(Node));
+    new->value = value;
+    new->previous = NULL;
+    new->next = list->first;
+
+    if (list->first != NULL)
+        list->first->previous = new;
+
+    list->first = new;
+    list->length++;
+
+    return list;
+}
+
+LinkedList *removeNode(LinkedList *list)
+{
+    if (list == NULL || list->first == NULL)
+        return NULL;
+
+    Node *afterFirst = list->first->next;
+    free(list->first);
+    list->first = afterFirst;
+
+    list->length--;
+
+    return list;
+}
+
+Node *elementAt(LinkedList *list, int indexToFind)
+{
+    if (list == NULL)
+        return NULL;
+
     int index = 0;
-    for (SinglyLinkedList *current = head;
-         current != NULL;
-         current = current->next, index++)
+    Node *current = NULL;
+    for (current = list->first; current != NULL; current = current->next, index++)
     {
         if (index == indexToFind)
-        {
-            *value = (int *)malloc(sizeof(int));
-            *(*value) = current->value;
-            return true;
-        }
+            return current;
     }
-    return false;
-}
-
-void insertInFront(SinglyLinkedList **head, int value)
-{
-    SinglyLinkedList *newNode = malloc(sizeof(SinglyLinkedList));
-    newNode->value = value;
-    newNode->next = *head;
-
-    *head = newNode;
-}
-
-bool deleteInFront(SinglyLinkedList **head)
-{
-    if (*head == NULL)
-        return false;
-
-    SinglyLinkedList *first = *head;
-
-    *head = first->next;
-
-    free(first);
-    first = NULL;
-
-    return true;
-}
-
-bool deleteByIndex(SinglyLinkedList **head, int indexToDelete)
-{
-    int index = 0;
-    bool found = false;
-    SinglyLinkedList *previous = NULL;
-    SinglyLinkedList *current = *head;
-
-    while (current != NULL)
-    {
-        if (index == indexToDelete)
-        {
-            found = true;
-            break;
-        }
-
-        previous = current;
-        current = current->next;
-        index++;
-    }
-
-    if (!found)
-        return false;
-
-    if (index == 0)
-        *head = current->next;
-    else
-        previous->next = current->next;
-
-    free(current);
-    current = NULL;
-
-    return true;
+    return current;
 }
