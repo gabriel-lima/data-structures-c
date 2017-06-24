@@ -4,7 +4,6 @@
 #include <stdbool.h>
 #include "singly_linked_list.h"
 
-
 /* begin: tests to insertNode */
 static void test_insert_node_only_one_value(void);
 static void test_insert_node_add_value_in_front(void);
@@ -27,9 +26,21 @@ static void when_first_node_is_null_dont_remove(void);
 static void when_remove_first_node(void);
 /* end: removeNode */
 
-
-const int NUMBER_OF_FUNCTIONS = 13;
-void (*test_functions[NUMBER_OF_FUNCTIONS])(void);
+void (*testFunctions[])(void) = {
+    test_insert_node_only_one_value,
+    test_insert_node_add_value_in_front,
+    test_when_just_one_node_set_next_with_null,
+    test_when_more_than_one_node_set_next_node,
+    test_when_just_one_node_set_previous_with_null,
+    test_when_more_than_one_node_set_previous,
+    test_when_list_is_null_dont_insert,
+    test_return_node_when_index_found,
+    test_when_index_doesnt_found_dont_get_node,
+    test_when_list_is_null_dont_get_node,
+    when_list_is_null_dont_remove,
+    when_first_node_is_null_dont_remove,
+    when_remove_first_node,
+    NULL};
 
 LinkedList *list = NULL;
 static void setupUp()
@@ -51,36 +62,17 @@ to debug:
 */
 int main(void)
 {
-    /* begin: tests to insertNode */
-    test_functions[0] = test_insert_node_only_one_value;
-    test_functions[1] = test_insert_node_add_value_in_front;
-    test_functions[2] = test_when_just_one_node_set_next_with_null;
-    test_functions[3] = test_when_more_than_one_node_set_next_node;
-    test_functions[4] = test_when_just_one_node_set_previous_with_null;
-    test_functions[5] = test_when_more_than_one_node_set_previous;
-    test_functions[6] = test_when_list_is_null_dont_insert;
-    /* end: tests to insertNode */
-
-    /* begin: tests to elementAt */
-    test_functions[7] = test_return_node_when_index_found;
-    test_functions[8] = test_when_index_doesnt_found_dont_get_node;
-    test_functions[9] = test_when_list_is_null_dont_get_node;
-    /* end: tests to elementAt */
-
-    /* begin: removeNode */
-    test_functions[10] = when_list_is_null_dont_remove;
-    test_functions[11] = when_first_node_is_null_dont_remove;
-    test_functions[12] = when_remove_first_node;
-    /* end: removeNode */
-
-    for (int current = 0; current < NUMBER_OF_FUNCTIONS; current++)
+    int current = 0;
+    do
     {
         setupUp();
-        
-        (*test_functions[current])();
-        
+
+        (*testFunctions[current])();
+
         tearDown();
-    }
+
+        current++;
+    } while ((*testFunctions[current]) != NULL);
 
     return 0;
 }
