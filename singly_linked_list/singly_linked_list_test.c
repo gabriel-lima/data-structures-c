@@ -311,7 +311,6 @@ static void set_previous_when_remove_a_node(void)
     removeNode(list);
 
     assert(node20 == list->first);
-    printf("previous: %i\n", node20->previous->value);
     assert(NULL == node20->previous);
     assert(node10 == list->first->next);
     assert(node20 == node10->previous);

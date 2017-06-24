@@ -47,9 +47,15 @@ bool removeNode(LinkedList *list)
     if (list == NULL || list->first == NULL)
         return false;
 
-    Node *afterFirst = list->first->next;
+    Node *newFirst = NULL;
+    if (list->first->next != NULL)
+    {
+        newFirst = list->first->next;
+        newFirst->previous = NULL;
+    }
+
     free(list->first);
-    list->first = afterFirst;
+    list->first = newFirst;
 
     list->length--;
 
