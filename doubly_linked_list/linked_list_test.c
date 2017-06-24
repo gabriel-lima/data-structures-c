@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <stdbool.h>
-#include "singly_linked_list.h"
+#include "linked_list.h"
 
 /* begin tests to newNode */
 static void test_new_node(void);
@@ -70,10 +70,10 @@ static void tearDown()
 
 /* 
 to run: 
-    gcc -std=c99 -Wall singly_linked_list_test.c singly_linked_list.c -o singly_linked_list_test && ./singly_linked_list_test
+    gcc -std=c99 -Wall linked_list_test.c linked_list.c -o linked_list_test && ./linked_list_test
 
 to debug:
-    gcc -std=c99 -Wall singly_linked_list_test.c singly_linked_list.c -o singly_linked_list_test -g && gdb ./singly_linked_list_test
+    gcc -std=c99 -Wall linked_list_test.c linked_list.c -o linked_list_test -g && gdb ./linked_list_test
 */
 int main(void)
 {
