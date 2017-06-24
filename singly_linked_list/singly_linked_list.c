@@ -26,23 +26,20 @@ Node *newNode(int value)
     return node;
 }
 
-LinkedList *insertNode(LinkedList *list, int value)
+bool insertNode(LinkedList *list, Node *nodeToInsert)
 {
-    if (list == NULL)
-        return NULL;
+    if (list == NULL || nodeToInsert == NULL)
+        return false;
 
-    Node *new = malloc(sizeof(Node));
-    new->value = value;
-    new->previous = NULL;
-    new->next = list->first;
+    nodeToInsert->next = list->first;
 
     if (list->first != NULL)
-        list->first->previous = new;
+        list->first->previous = nodeToInsert;
 
-    list->first = new;
+    list->first = nodeToInsert;
     list->length++;
 
-    return list;
+    return true;
 }
 
 LinkedList *removeNode(LinkedList *list)

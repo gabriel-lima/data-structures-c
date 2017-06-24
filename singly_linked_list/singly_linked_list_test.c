@@ -10,12 +10,13 @@ static void test_new_node(void);
 
 /* begin: tests to insertNode */
 static void test_insert_node_only_one_value(void);
-static void test_insert_node_add_value_in_front(void);
+static void test_insert_node_add_last_node_in_front(void);
 static void test_when_just_one_node_set_next_with_null(void);
 static void test_when_more_than_one_node_set_next_node(void);
 static void test_when_just_one_node_set_previous_with_null(void);
 static void test_when_more_than_one_node_set_previous(void);
 static void test_when_list_is_null_dont_insert(void);
+static void test_when_node_is_null_dont_insert(void);
 /* end: tests to insertNode */
 
 /* begin: tests to elementAt */
@@ -33,12 +34,13 @@ static void when_remove_first_node(void);
 void (*testFunctions[])(void) = {
     test_new_node,
     test_insert_node_only_one_value,
-    test_insert_node_add_value_in_front,
+    test_insert_node_add_last_node_in_front,
     test_when_just_one_node_set_next_with_null,
     test_when_more_than_one_node_set_next_node,
     test_when_just_one_node_set_previous_with_null,
     test_when_more_than_one_node_set_previous,
     test_when_list_is_null_dont_insert,
+    test_when_node_is_null_dont_insert,
     test_return_node_when_index_found,
     test_when_index_doesnt_found_dont_get_node,
     test_when_list_is_null_dont_get_node,
@@ -97,28 +99,39 @@ static void test_new_node(void)
 /* begin: tests to insertNode */
 static void test_insert_node_only_one_value(void)
 {
-    list = insertNode(list, 10);
+    Node *node = newNode(10);
 
+    bool success = insertNode(list, node);
+
+    assert(true == success);
     assert(1 == list->length);
     assert(NULL != list->first);
     assert(10 == list->first->value);
+    assert(node == list->first);
 }
 
-static void test_insert_node_add_value_in_front(void)
+static void test_insert_node_add_last_node_in_front(void)
 {
-    list = insertNode(list, 10);
-    list = insertNode(list, 20);
+    Node *firstNodeAdded = newNode(10);
+    Node *lastNodeAdded = newNode(20);
+
+    insertNode(list, firstNodeAdded);
+    insertNode(list, lastNodeAdded);
 
     assert(2 == list->length);
     assert(NULL != list->first);
-    assert(20 == list->first->value);
+    assert(lastNodeAdded == list->first);
+    assert(lastNodeAdded->value == list->first->value);
     assert(NULL != list->first->next);
-    assert(10 == list->first->next->value);
+    assert(firstNodeAdded == list->first->next);
+    assert(firstNodeAdded->value == list->first->next->value);
 }
 
 static void test_when_just_one_node_set_next_with_null(void)
 {
-    list = insertNode(list, 10);
+    Node *node = newNode(10);
+
+    insertNode(list, node);
 
     assert(1 == list->length);
     assert(NULL != list->first);
@@ -127,8 +140,11 @@ static void test_when_just_one_node_set_next_with_null(void)
 
 static void test_when_more_than_one_node_set_next_node(void)
 {
-    list = insertNode(list, 10);
-    list = insertNode(list, 20);
+    Node *firstNodeAdded = newNode(10);
+    Node *lastNodeAdded = newNode(20);
+
+    insertNode(list, firstNodeAdded);
+    insertNode(list, lastNodeAdded);
 
     assert(2 == list->length);
     assert(NULL != list->first);
@@ -138,7 +154,9 @@ static void test_when_more_than_one_node_set_next_node(void)
 
 static void test_when_just_one_node_set_previous_with_null(void)
 {
-    list = insertNode(list, 10);
+    Node *node = newNode(10);
+
+    insertNode(list, node);
 
     assert(1 == list->length);
     assert(NULL != list->first);
@@ -147,44 +165,70 @@ static void test_when_just_one_node_set_previous_with_null(void)
 
 static void test_when_more_than_one_node_set_previous(void)
 {
-    list = insertNode(list, 10);
-    list = insertNode(list, 20);
-    list = insertNode(list, 30);
+    Node *node10 = newNode(10);
+    Node *node20 = newNode(20);
+    Node *node30 = newNode(30);
+
+    insertNode(list, node10);
+    insertNode(list, node20);
+    insertNode(list, node30);
 
     assert(3 == list->length);
+
     assert(NULL != list->first);
-    assert(NULL == list->first->previous);
-    assert(NULL != list->first->next->previous);
-    assert(list->first->next->previous == list->first);
-    assert(list->first->next->next->previous == list->first->next);
+    assert(node30 == list->first);
+    assert(NULL == node30->previous);
+
+    assert(NULL != list->first->next);
+    assert(node20 == list->first->next);
+    assert(node30 == node20->previous);
+
+    assert(NULL != list->first->next->next);
+    assert(node10 == list->first->next->next);
+    assert(node20 == node10->previous);
 }
 
 static void test_when_list_is_null_dont_insert(void)
 {
-    assert(NULL == insertNode(NULL, 10));
+    Node *node = newNode(10);
+
+    bool success = insertNode(NULL, node);
+
+    assert(false == success);
+}
+
+static void test_when_node_is_null_dont_insert(void)
+{
+    bool success = insertNode(list, NULL);
+
+    assert(false == success);
 }
 /* end: tests to insertNode */
 
 /* begin: tests to elementAt */
 static void test_return_node_when_index_found(void)
 {
-    list = insertNode(list, 10);
-    list = insertNode(list, 20);
+    Node *node10 = newNode(10);
+    Node *node20 = newNode(20);
+    insertNode(list, node10);
+    insertNode(list, node20);
 
-    assert(20 == elementAt(list, 0)->value);
-    assert(10 == elementAt(list, 1)->value);
+    assert(node20 == elementAt(list, 0));
+    assert(node10 == elementAt(list, 1));
 }
 
 static void test_when_index_doesnt_found_dont_get_node(void)
 {
-    list = insertNode(list, 10);
+    Node *node = newNode(10);
+    insertNode(list, node);
 
     assert(NULL == elementAt(list, -1));
 }
 
 static void test_when_list_is_null_dont_get_node(void)
 {
-    list = insertNode(list, 10);
+    Node *node = newNode(10);
+    insertNode(list, node);
 
     assert(NULL == elementAt(NULL, 0));
 }
@@ -193,7 +237,8 @@ static void test_when_list_is_null_dont_get_node(void)
 /* begin: removeNode */
 static void when_list_is_null_dont_remove(void)
 {
-    list = insertNode(list, 10);
+    Node *node = newNode(10);
+    insertNode(list, node);
 
     assert(NULL == removeNode(NULL));
     assert(1 == list->length);
@@ -207,8 +252,10 @@ static void when_first_node_is_null_dont_remove(void)
 
 static void when_remove_first_node(void)
 {
-    list = insertNode(list, 10);
-    list = insertNode(list, 10);
+    Node *node10 = newNode(10);
+    Node *node20 = newNode(20);
+    insertNode(list, node10);
+    insertNode(list, node20);
 
     list = removeNode(list);
 
