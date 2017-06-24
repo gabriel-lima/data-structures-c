@@ -39,7 +39,7 @@ static void setupUp()
 
 static void tearDown()
 {
-    removeLinkedList(list);
+    destroyLinkedList(list);
 }
 
 /* 

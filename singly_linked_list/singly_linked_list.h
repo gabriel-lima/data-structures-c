@@ -14,7 +14,7 @@ typedef struct LinkedList
 } LinkedList;
 
 LinkedList *newLinkedList();
-void removeLinkedList(LinkedList *list);
+void destroyLinkedList(LinkedList *list);
 LinkedList *insertNode(LinkedList *list, int value);
 Node *elementAt(LinkedList *list, int indexToFind);
 LinkedList *removeNode(LinkedList *list);

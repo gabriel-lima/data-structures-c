@@ -11,7 +11,7 @@ LinkedList *newLinkedList()
     return list;
 }
 
-void removeLinkedList(LinkedList *list)
+void destroyLinkedList(LinkedList *list)
 {
     free(list);
 }
