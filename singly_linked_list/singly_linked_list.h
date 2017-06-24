@@ -17,5 +17,5 @@ LinkedList *newLinkedList();
 void destroyLinkedList(LinkedList *list);
 Node *newNode(int value);
 bool insertNode(LinkedList *list, Node *nodeToInsert);
+bool removeNode(LinkedList *list);
 Node *elementAt(LinkedList *list, int indexToFind);
-LinkedList *removeNode(LinkedList *list);

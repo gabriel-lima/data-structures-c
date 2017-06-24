@@ -42,10 +42,10 @@ bool insertNode(LinkedList *list, Node *nodeToInsert)
     return true;
 }
 
-LinkedList *removeNode(LinkedList *list)
+bool removeNode(LinkedList *list)
 {
     if (list == NULL || list->first == NULL)
-        return NULL;
+        return false;
 
     Node *afterFirst = list->first->next;
     free(list->first);
@@ -53,7 +53,7 @@ LinkedList *removeNode(LinkedList *list)
 
     list->length--;
 
-    return list;
+    return true;
 }
 
 Node *elementAt(LinkedList *list, int indexToFind)

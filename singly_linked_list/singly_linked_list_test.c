@@ -28,6 +28,10 @@ static void test_when_list_is_null_dont_get_node(void);
 /* begin: removeNode */
 static void when_list_is_null_dont_remove(void);
 static void when_first_node_is_null_dont_remove(void);
+static void when_remove_change_length(void);
+static void set_first_null_when_remove_a_list_just_one_node(void);
+static void set_next_when_remove_a_node(void);
+static void set_previous_when_remove_a_node(void);
 static void when_remove_first_node(void);
 /* end: removeNode */
 
@@ -46,6 +50,10 @@ void (*testFunctions[])(void) = {
     test_when_list_is_null_dont_get_node,
     when_list_is_null_dont_remove,
     when_first_node_is_null_dont_remove,
+    when_remove_change_length,
+    set_first_null_when_remove_a_list_just_one_node,
+    set_next_when_remove_a_node,
+    set_previous_when_remove_a_node,
     when_remove_first_node,
     NULL};
 
@@ -240,14 +248,73 @@ static void when_list_is_null_dont_remove(void)
     Node *node = newNode(10);
     insertNode(list, node);
 
-    assert(NULL == removeNode(NULL));
+    bool success = removeNode(NULL);
+
+    assert(false == success);
     assert(1 == list->length);
 }
 
 static void when_first_node_is_null_dont_remove(void)
 {
-    assert(NULL == removeNode(list));
+    bool success = removeNode(list);
+
+    assert(false == success);
     assert(0 == list->length);
+}
+
+static void when_remove_change_length(void)
+{
+    Node *node10 = newNode(10);
+    insertNode(list, node10);
+
+    removeNode(list);
+
+    assert(0 == list->length);
+}
+
+static void set_first_null_when_remove_a_list_just_one_node(void)
+{
+    Node *node10 = newNode(10);
+    insertNode(list, node10);
+
+    removeNode(list);
+
+    assert(NULL == list->first);
+}
+
+static void set_next_when_remove_a_node(void)
+{
+    Node *node10 = newNode(10);
+    Node *node20 = newNode(20);
+    Node *node30 = newNode(30);
+    insertNode(list, node10);
+    insertNode(list, node20);
+    insertNode(list, node30);
+
+    removeNode(list);
+
+    assert(node20 == list->first);
+    assert(node10 == node20->next);
+    assert(node10 == list->first->next);
+    assert(NULL == node10->next);
+}
+
+static void set_previous_when_remove_a_node(void)
+{
+    Node *node10 = newNode(10);
+    Node *node20 = newNode(20);
+    Node *node30 = newNode(30);
+    insertNode(list, node10);
+    insertNode(list, node20);
+    insertNode(list, node30);
+
+    removeNode(list);
+
+    assert(node20 == list->first);
+    printf("previous: %i\n", node20->previous->value);
+    assert(NULL == node20->previous);
+    assert(node10 == list->first->next);
+    assert(node20 == node10->previous);
 }
 
 static void when_remove_first_node(void)
@@ -257,8 +324,11 @@ static void when_remove_first_node(void)
     insertNode(list, node10);
     insertNode(list, node20);
 
-    list = removeNode(list);
+    removeNode(list);
 
     assert(1 == list->length);
+    assert(node10 == list->first);
+    assert(NULL == list->first->next);
+    assert(NULL == list->first->previous);
 }
 /* end: removeNode */
