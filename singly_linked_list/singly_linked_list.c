@@ -16,6 +16,16 @@ void destroyLinkedList(LinkedList *list)
     free(list);
 }
 
+Node *newNode(int value)
+{
+    Node *node = malloc(sizeof(Node));
+    node->value = value;
+    node->previous = NULL;
+    node->next = NULL;
+
+    return node;
+}
+
 LinkedList *insertNode(LinkedList *list, int value)
 {
     if (list == NULL)
@@ -33,16 +43,6 @@ LinkedList *insertNode(LinkedList *list, int value)
     list->length++;
 
     return list;
-}
-
-Node *newNode(int value)
-{
-    Node *node = malloc(sizeof(Node));
-    node->value = value;
-    node->previous = NULL;
-    node->next = NULL;
-
-    return node;
 }
 
 LinkedList *removeNode(LinkedList *list)
