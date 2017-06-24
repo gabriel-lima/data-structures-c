@@ -4,6 +4,10 @@
 #include <stdbool.h>
 #include "singly_linked_list.h"
 
+/* begin tests to newNode */
+static void test_new_node(void);
+/* end tests to newNode */
+
 /* begin: tests to insertNode */
 static void test_insert_node_only_one_value(void);
 static void test_insert_node_add_value_in_front(void);
@@ -27,6 +31,7 @@ static void when_remove_first_node(void);
 /* end: removeNode */
 
 void (*testFunctions[])(void) = {
+    test_new_node,
     test_insert_node_only_one_value,
     test_insert_node_add_value_in_front,
     test_when_just_one_node_set_next_with_null,
@@ -76,6 +81,18 @@ int main(void)
 
     return 0;
 }
+
+/* begin tests to newNode */
+static void test_new_node(void)
+{
+    Node *node = newNode(10);
+
+    assert(NULL != node);
+    assert(10 == node->value);
+    assert(NULL == node->previous);
+    assert(NULL == node->next);
+}
+/* end tests to newNode */
 
 /* begin: tests to insertNode */
 static void test_insert_node_only_one_value(void)

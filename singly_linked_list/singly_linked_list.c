@@ -35,6 +35,16 @@ LinkedList *insertNode(LinkedList *list, int value)
     return list;
 }
 
+Node *newNode(int value)
+{
+    Node *node = malloc(sizeof(Node));
+    node->value = value;
+    node->previous = NULL;
+    node->next = NULL;
+
+    return node;
+}
+
 LinkedList *removeNode(LinkedList *list)
 {
     if (list == NULL || list->first == NULL)
