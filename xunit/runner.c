@@ -13,7 +13,7 @@ Runner *init(void (*setUp)(), void (*tearDown)())
     return r;
 }
 
-void registerTest(Runner *runner, void (*test)(void))
+void registerTest(Runner *runner, void (*test)())
 {
     if (runner == NULL || test == NULL)
         return;
