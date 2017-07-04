@@ -11,6 +11,10 @@ int secondTestFunctionCalled = 0;
 void registeredSecondTestFunction();
 
 void test_xunit(void);
+/*
+to run:
+    gcc test.c runner.c -o test && ./test
+*/
 int main(void)
 {
     test_xunit();
