@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <stdbool.h>
 #include "linked_list.h"
+#include "../xunit/runner.h"
 
 /* begin tests to newNode */
 static void test_new_node(void);
@@ -32,27 +33,8 @@ static void set_next_when_remove_a_node(void);
 static void when_remove_first_node(void);
 /* end: removeNode */
 
-void (*testFunctions[])(void) = {
-    test_new_node,
-    test_insert_node_only_one_value,
-    test_insert_node_add_last_node_in_front,
-    test_when_just_one_node_set_next_with_null,
-    test_when_more_than_one_node_set_next_node,
-    test_when_list_is_null_dont_insert,
-    test_when_node_is_null_dont_insert,
-    test_return_node_when_index_found,
-    test_when_index_doesnt_found_dont_get_node,
-    test_when_list_is_null_dont_get_node,
-    when_list_is_null_dont_remove,
-    when_first_node_is_null_dont_remove,
-    when_remove_change_length,
-    set_first_null_when_remove_a_list_just_one_node,
-    set_next_when_remove_a_node,
-    when_remove_first_node,
-    NULL};
-
 LinkedList *list = NULL;
-static void setupUp()
+static void setUp()
 {
     list = newLinkedList();
 }
@@ -64,24 +46,31 @@ static void tearDown()
 
 /* 
 to run: 
-    gcc -std=c99 -Wall linked_list_test.c linked_list.c -o linked_list_test && ./linked_list_test
+    gcc linked_list_test.c linked_list.c ../xunit/runner.c -o linked_list_test && ./linked_list_test
 
 to debug:
-    gcc -std=c99 -Wall linked_list_test.c linked_list.c -o linked_list_test -g && gdb ./linked_list_test
+    gcc linked_list_test.c linked_list.c ../xunit/runner.c -o linked_list_test -g && gdb ./linked_list_test
 */
 int main(void)
 {
-    int current = 0;
-    do
-    {
-        setupUp();
-
-        (*testFunctions[current])();
-
-        tearDown();
-
-        current++;
-    } while ((*testFunctions[current]) != NULL);
+    Runner *runner = init(setUp, tearDown);
+    registerTest(runner, &test_new_node);
+    registerTest(runner, &test_insert_node_only_one_value);
+    registerTest(runner, &test_insert_node_add_last_node_in_front);
+    registerTest(runner, &test_when_just_one_node_set_next_with_null);
+    registerTest(runner, &test_when_more_than_one_node_set_next_node);
+    registerTest(runner, &test_when_list_is_null_dont_insert);
+    registerTest(runner, &test_when_node_is_null_dont_insert);
+    registerTest(runner, &test_return_node_when_index_found);
+    registerTest(runner, &test_when_index_doesnt_found_dont_get_node);
+    registerTest(runner, &test_when_list_is_null_dont_get_node);
+    registerTest(runner, &when_list_is_null_dont_remove);
+    registerTest(runner, &when_first_node_is_null_dont_remove);
+    registerTest(runner, &when_remove_change_length);
+    registerTest(runner, &set_first_null_when_remove_a_list_just_one_node);
+    registerTest(runner, &set_next_when_remove_a_node);
+    registerTest(runner, &when_remove_first_node);
+    run(runner);
 
     return 0;
 }
