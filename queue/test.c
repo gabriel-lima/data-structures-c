@@ -7,12 +7,14 @@ static void setUp();
 static void tearDown();
 
 static void test_new_queue();
+static void test_new_element();
 
 int main()
 {
     Runner *runner = init(&setUp, &tearDown);
 
     registerTest(runner, &test_new_queue);
+    registerTest(runner, &test_new_element);
 
     run(runner);
 
@@ -30,4 +32,13 @@ static void test_new_queue()
     assert(NULL == q->rear);
     assert(NULL == q->front);
     assert(0 == q->length);
+}
+
+static void test_new_element()
+{
+    Element *e = newElement(10);
+
+    assert(NULL != e);
+    assert(10 == e->value);
+    assert(NULL == e->next);
 }
