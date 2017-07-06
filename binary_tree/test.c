@@ -2,7 +2,6 @@
 #include <assert.h>
 #include "binary_tree.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 /*begin: tests to function insertNode */
 static void test_insert_one_node();
