@@ -6,9 +6,13 @@
 static void setUp();
 static void tearDown();
 
+static void test_new_queue();
+
 int main()
 {
     Runner *runner = init(&setUp, &tearDown);
+
+    registerTest(runner, &test_new_queue);
 
     run(runner);
 
