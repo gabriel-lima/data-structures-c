@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <stdio.h>
 #include <assert.h>
 #include <stdbool.h>
 #include "linked_list.h"
@@ -44,13 +43,6 @@ static void tearDown()
     destroyLinkedList(list);
 }
 
-/* 
-to run: 
-    gcc linked_list_test.c linked_list.c ../xunit/runner.c -o linked_list_test && ./linked_list_test
-
-to debug:
-    gcc linked_list_test.c linked_list.c ../xunit/runner.c -o linked_list_test -g && gdb ./linked_list_test
-*/
 int main(void)
 {
     Runner *runner = init(setUp, tearDown);
