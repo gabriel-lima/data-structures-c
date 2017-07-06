@@ -1,64 +1,85 @@
+#include "linked_list.h"
+#include "../xunit/runner.h"
 #include <stdlib.h>
-#include <stdio.h>
 #include <assert.h>
 #include <stdbool.h>
-#include "linked_list.h"
 
 /* begin tests to newNode */
-static void test_new_node(void);
+static void test_new_node();
 /* end tests to newNode */
 
 /* begin: tests to insertNode */
-static void test_insert_node_only_one_value(void);
-static void test_insert_node_add_last_node_in_front(void);
-static void test_when_just_one_node_set_next_with_null(void);
-static void test_when_more_than_one_node_set_next_node(void);
-static void test_when_just_one_node_set_previous_with_null(void);
-static void test_when_more_than_one_node_set_previous(void);
-static void test_when_list_is_null_dont_insert(void);
-static void test_when_node_is_null_dont_insert(void);
+static void test_insert_node_only_one_value();
+static void test_insert_node_add_last_node_in_front();
+static void test_when_just_one_node_set_next_with_null();
+static void test_when_more_than_one_node_set_next_node();
+static void test_when_just_one_node_set_previous_with_null();
+static void test_when_more_than_one_node_set_previous();
+static void test_when_list_is_null_dont_insert();
+static void test_when_node_is_null_dont_insert();
 /* end: tests to insertNode */
 
 /* begin: tests to elementAt */
-static void test_return_node_when_index_found(void);
-static void test_when_index_doesnt_found_dont_get_node(void);
-static void test_when_list_is_null_dont_get_node(void);
+static void test_return_node_when_index_found();
+static void test_when_index_doesnt_found_dont_get_node();
+static void test_when_list_is_null_dont_get_node();
 /* end: tests to elementAt */
 
 /* begin: removeNode */
-static void when_list_is_null_dont_remove(void);
-static void when_first_node_is_null_dont_remove(void);
-static void when_remove_change_length(void);
-static void set_first_null_when_remove_a_list_just_one_node(void);
-static void set_next_when_remove_a_node(void);
-static void set_previous_when_remove_a_node(void);
-static void when_remove_first_node(void);
+static void when_list_is_null_dont_remove();
+static void when_first_node_is_null_dont_remove();
+static void when_remove_change_length();
+static void set_first_null_when_remove_a_list_just_one_node();
+static void set_next_when_remove_a_node();
+static void set_previous_when_remove_a_node();
+static void when_remove_first_node();
 /* end: removeNode */
 
-void (*testFunctions[])(void) = {
-    test_new_node,
-    test_insert_node_only_one_value,
-    test_insert_node_add_last_node_in_front,
-    test_when_just_one_node_set_next_with_null,
-    test_when_more_than_one_node_set_next_node,
-    test_when_just_one_node_set_previous_with_null,
-    test_when_more_than_one_node_set_previous,
-    test_when_list_is_null_dont_insert,
-    test_when_node_is_null_dont_insert,
-    test_return_node_when_index_found,
-    test_when_index_doesnt_found_dont_get_node,
-    test_when_list_is_null_dont_get_node,
-    when_list_is_null_dont_remove,
-    when_first_node_is_null_dont_remove,
-    when_remove_change_length,
-    set_first_null_when_remove_a_list_just_one_node,
-    set_next_when_remove_a_node,
-    set_previous_when_remove_a_node,
-    when_remove_first_node,
-    NULL};
+static void setUp();
+static void tearDown();
+
+int main()
+{
+    Runner *runner = init(&setUp, &tearDown);
+
+    /* begin tests to newNode */
+    registerTest(runner, &test_new_node);
+    /* end tests to newNode */
+
+    /* begin: tests to insertNode */
+    registerTest(runner, &test_insert_node_only_one_value);
+    registerTest(runner, &test_insert_node_add_last_node_in_front);
+    registerTest(runner, &test_when_just_one_node_set_next_with_null);
+    registerTest(runner, &test_when_more_than_one_node_set_next_node);
+    registerTest(runner, &test_when_just_one_node_set_previous_with_null);
+    registerTest(runner, &test_when_more_than_one_node_set_previous);
+    registerTest(runner, &test_when_list_is_null_dont_insert);
+    registerTest(runner, &test_when_node_is_null_dont_insert);
+    /* end: tests to insertNode */
+
+    /* begin: tests to elementAt */
+    registerTest(runner, &test_return_node_when_index_found);
+    registerTest(runner, &test_when_index_doesnt_found_dont_get_node);
+    registerTest(runner, &test_when_list_is_null_dont_get_node);
+    /* end: tests to elementAt */
+
+    /* begin: removeNode */
+    registerTest(runner, &when_list_is_null_dont_remove);
+    registerTest(runner, &when_first_node_is_null_dont_remove);
+    registerTest(runner, &when_remove_change_length);
+    registerTest(runner, &set_first_null_when_remove_a_list_just_one_node);
+    registerTest(runner, &set_next_when_remove_a_node);
+    registerTest(runner, &set_previous_when_remove_a_node);
+    registerTest(runner, &when_remove_first_node);
+    /* end: removeNode */
+
+    run(runner);
+
+    return 0;
+}
 
 LinkedList *list = NULL;
-static void setupUp()
+static void setUp()
 {
     list = newLinkedList();
 }
@@ -68,32 +89,8 @@ static void tearDown()
     destroyLinkedList(list);
 }
 
-/* 
-to run: 
-    gcc -std=c99 -Wall linked_list_test.c linked_list.c -o linked_list_test && ./linked_list_test
-
-to debug:
-    gcc -std=c99 -Wall linked_list_test.c linked_list.c -o linked_list_test -g && gdb ./linked_list_test
-*/
-int main(void)
-{
-    int current = 0;
-    do
-    {
-        setupUp();
-
-        (*testFunctions[current])();
-
-        tearDown();
-
-        current++;
-    } while ((*testFunctions[current]) != NULL);
-
-    return 0;
-}
-
 /* begin tests to newNode */
-static void test_new_node(void)
+static void test_new_node()
 {
     Node *node = newNode(10);
 
@@ -105,7 +102,7 @@ static void test_new_node(void)
 /* end tests to newNode */
 
 /* begin: tests to insertNode */
-static void test_insert_node_only_one_value(void)
+static void test_insert_node_only_one_value()
 {
     Node *node = newNode(10);
 
@@ -118,7 +115,7 @@ static void test_insert_node_only_one_value(void)
     assert(node == list->first);
 }
 
-static void test_insert_node_add_last_node_in_front(void)
+static void test_insert_node_add_last_node_in_front()
 {
     Node *firstNodeAdded = newNode(10);
     Node *lastNodeAdded = newNode(20);
@@ -135,7 +132,7 @@ static void test_insert_node_add_last_node_in_front(void)
     assert(firstNodeAdded->value == list->first->next->value);
 }
 
-static void test_when_just_one_node_set_next_with_null(void)
+static void test_when_just_one_node_set_next_with_null()
 {
     Node *node = newNode(10);
 
@@ -146,7 +143,7 @@ static void test_when_just_one_node_set_next_with_null(void)
     assert(NULL == list->first->next);
 }
 
-static void test_when_more_than_one_node_set_next_node(void)
+static void test_when_more_than_one_node_set_next_node()
 {
     Node *firstNodeAdded = newNode(10);
     Node *lastNodeAdded = newNode(20);
@@ -160,7 +157,7 @@ static void test_when_more_than_one_node_set_next_node(void)
     assert(NULL == list->first->next->next);
 }
 
-static void test_when_just_one_node_set_previous_with_null(void)
+static void test_when_just_one_node_set_previous_with_null()
 {
     Node *node = newNode(10);
 
@@ -171,7 +168,7 @@ static void test_when_just_one_node_set_previous_with_null(void)
     assert(NULL == list->first->previous);
 }
 
-static void test_when_more_than_one_node_set_previous(void)
+static void test_when_more_than_one_node_set_previous()
 {
     Node *node10 = newNode(10);
     Node *node20 = newNode(20);
@@ -196,7 +193,7 @@ static void test_when_more_than_one_node_set_previous(void)
     assert(node20 == node10->previous);
 }
 
-static void test_when_list_is_null_dont_insert(void)
+static void test_when_list_is_null_dont_insert()
 {
     Node *node = newNode(10);
 
@@ -205,7 +202,7 @@ static void test_when_list_is_null_dont_insert(void)
     assert(false == success);
 }
 
-static void test_when_node_is_null_dont_insert(void)
+static void test_when_node_is_null_dont_insert()
 {
     bool success = insertNode(list, NULL);
 
@@ -214,7 +211,7 @@ static void test_when_node_is_null_dont_insert(void)
 /* end: tests to insertNode */
 
 /* begin: tests to elementAt */
-static void test_return_node_when_index_found(void)
+static void test_return_node_when_index_found()
 {
     Node *node10 = newNode(10);
     Node *node20 = newNode(20);
@@ -225,7 +222,7 @@ static void test_return_node_when_index_found(void)
     assert(node10 == elementAt(list, 1));
 }
 
-static void test_when_index_doesnt_found_dont_get_node(void)
+static void test_when_index_doesnt_found_dont_get_node()
 {
     Node *node = newNode(10);
     insertNode(list, node);
@@ -233,7 +230,7 @@ static void test_when_index_doesnt_found_dont_get_node(void)
     assert(NULL == elementAt(list, -1));
 }
 
-static void test_when_list_is_null_dont_get_node(void)
+static void test_when_list_is_null_dont_get_node()
 {
     Node *node = newNode(10);
     insertNode(list, node);
@@ -243,7 +240,7 @@ static void test_when_list_is_null_dont_get_node(void)
 /* end: tests to elementAt */
 
 /* begin: removeNode */
-static void when_list_is_null_dont_remove(void)
+static void when_list_is_null_dont_remove()
 {
     Node *node = newNode(10);
     insertNode(list, node);
@@ -254,7 +251,7 @@ static void when_list_is_null_dont_remove(void)
     assert(1 == list->length);
 }
 
-static void when_first_node_is_null_dont_remove(void)
+static void when_first_node_is_null_dont_remove()
 {
     bool success = removeNode(list);
 
@@ -262,7 +259,7 @@ static void when_first_node_is_null_dont_remove(void)
     assert(0 == list->length);
 }
 
-static void when_remove_change_length(void)
+static void when_remove_change_length()
 {
     Node *node10 = newNode(10);
     insertNode(list, node10);
@@ -272,7 +269,7 @@ static void when_remove_change_length(void)
     assert(0 == list->length);
 }
 
-static void set_first_null_when_remove_a_list_just_one_node(void)
+static void set_first_null_when_remove_a_list_just_one_node()
 {
     Node *node10 = newNode(10);
     insertNode(list, node10);
@@ -282,7 +279,7 @@ static void set_first_null_when_remove_a_list_just_one_node(void)
     assert(NULL == list->first);
 }
 
-static void set_next_when_remove_a_node(void)
+static void set_next_when_remove_a_node()
 {
     Node *node10 = newNode(10);
     Node *node20 = newNode(20);
@@ -299,7 +296,7 @@ static void set_next_when_remove_a_node(void)
     assert(NULL == node10->next);
 }
 
-static void set_previous_when_remove_a_node(void)
+static void set_previous_when_remove_a_node()
 {
     Node *node10 = newNode(10);
     Node *node20 = newNode(20);
@@ -316,7 +313,7 @@ static void set_previous_when_remove_a_node(void)
     assert(node20 == node10->previous);
 }
 
-static void when_remove_first_node(void)
+static void when_remove_first_node()
 {
     Node *node10 = newNode(10);
     Node *node20 = newNode(20);
