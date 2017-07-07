@@ -15,6 +15,7 @@ static void test_enqueue_two_elements();
 static void test_enqueue_three_elements();
 static void test_doesnt_enqueue_when_queue_is_null();
 static void test_doesnt_enqueue_when_element_is_null();
+static void test_increment_length();
 /* end */
 
 /* begin tests to dequeue */
@@ -22,6 +23,8 @@ static void test_dequeue_one_element();
 static void test_dequeue_two_elements();
 static void test_dequeue_three_elements();
 static void test_doesnt_dequeue_when_empty();
+static void test_decrement_length();
+static void test_doesnt_decrement_length_when_hasnt_element();
 /* end */
 
 int main()
@@ -37,6 +40,7 @@ int main()
     registerTest(runner, &test_enqueue_three_elements);
     registerTest(runner, &test_doesnt_enqueue_when_queue_is_null);
     registerTest(runner, &test_doesnt_enqueue_when_element_is_null);
+    registerTest(runner, &test_increment_length);
     /* end */
 
     /* begin tests to dequeue */
@@ -44,6 +48,8 @@ int main()
     registerTest(runner, &test_dequeue_two_elements);
     registerTest(runner, &test_dequeue_three_elements);
     registerTest(runner, &test_doesnt_dequeue_when_empty);
+    registerTest(runner, &test_decrement_length);
+    registerTest(runner, &test_doesnt_decrement_length_when_hasnt_element);
     /* end */
 
     run(runner);
@@ -141,12 +147,23 @@ static void test_doesnt_enqueue_when_queue_is_null()
 {
     enqueue(NULL, newElement(10));
 
-    
+    assert(NULL == queue->rear);
+    assert(NULL == queue->front);
 }
 
 static void test_doesnt_enqueue_when_element_is_null()
 {
+    enqueue(queue, NULL);
 
+    assert(NULL == queue->rear);
+    assert(NULL == queue->front);
+}
+
+static void test_increment_length()
+{
+    enqueue(queue, newElement(10));
+
+    assert(1 == queue->length);
 }
 /* end */
 
@@ -210,5 +227,20 @@ static void test_doesnt_dequeue_when_empty()
     assert(NULL == elementObtained);
     assert(NULL == queue->rear);
     assert(NULL == queue->front);
+}
+
+static void test_decrement_length()
+{
+    enqueue(queue, newElement(10));
+    dequeue(queue);
+
+    assert(0 == queue->length);
+}
+
+static void test_doesnt_decrement_length_when_hasnt_element()
+{
+    dequeue(queue);
+
+    assert(0 == queue->length);
 }
 /* end */

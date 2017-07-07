@@ -26,6 +26,9 @@ Element *newElement(int value)
 
 void enqueue(Queue *queue, Element *element)
 {
+    if (!queue || !element)
+        return;
+
     if (!queue->front)
         queue->front = element;
 
@@ -34,6 +37,7 @@ void enqueue(Queue *queue, Element *element)
 
     element->next = queue->rear;
     queue->rear = element;
+    queue->length++;
 }
 
 Element *dequeue(Queue *queue)
@@ -50,6 +54,9 @@ Element *dequeue(Queue *queue)
         queue->rear = NULL;
     
     queue->front = newFront;
+    
+    if (elementObtained)
+        queue->length--;
 
     return elementObtained;
 }
