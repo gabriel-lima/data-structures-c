@@ -8,3 +8,5 @@ queue/test
 queue/test.dSYM/
 binary_tree/test
 binary_tree/test.dSYM/
+trie/test
+trie/test.dSYM/
