@@ -2,6 +2,7 @@ typedef struct Element
 {
     int value;
     struct Element *next;
+    struct Element *previous;
 } Element;
 
 typedef struct Queue

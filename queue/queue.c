@@ -20,5 +20,36 @@ Element *newElement(int value)
     Element *e = malloc(sizeof(Element));
     e->value = value;
     e->next = NULL;
+    e->previous = NULL;
     return e;
+}
+
+void enqueue(Queue *queue, Element *element)
+{
+    if (!queue->front)
+        queue->front = element;
+
+    if (queue->rear)
+        queue->rear->previous = element;
+
+    element->next = queue->rear;
+    queue->rear = element;
+}
+
+Element *dequeue(Queue *queue)
+{
+    Element *elementObtained = queue->front;
+
+    Element *newFront = NULL;
+    if (queue->front)
+        newFront = queue->front->previous;
+
+    if (newFront)
+        newFront->next = NULL;
+    else
+        queue->rear = NULL;
+    
+    queue->front = newFront;
+
+    return elementObtained;
 }
