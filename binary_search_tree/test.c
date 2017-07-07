@@ -1,6 +1,6 @@
 #include "../xunit/runner.h"
 #include <assert.h>
-#include "binary_tree.h"
+#include "binary_search_tree.h"
 #include <stdlib.h>
 
 /*begin: tests to function insertNode */
@@ -47,15 +47,15 @@ int main()
     run(runner);
 }
 
-BinaryTree *tree;
+BinarySearchTree *tree;
 
 static void setUp()
 {
-    tree = newBinaryTree();
+    tree = newBinarySearchTree();
 }
 static void tearDown()
 {
-    destroyBinaryTree(tree);
+    destroyBinarySearchTree(tree);
 }
 
 /*begin: tests to function insertNode */

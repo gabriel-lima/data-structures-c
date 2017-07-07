@@ -1,17 +1,17 @@
 #include <stdlib.h>
-#include "binary_tree.h"
+#include "binary_search_tree.h"
 
-BinaryTree *newBinaryTree()
+BinarySearchTree *newBinarySearchTree()
 {
-    BinaryTree *tree = malloc(sizeof(BinaryTree));
+    BinarySearchTree *tree = malloc(sizeof(BinarySearchTree));
     tree->root = NULL;
     tree->length = 0;
     return tree;
 }
 
-void destroyBinaryTree(BinaryTree *binaryTree)
+void destroyBinarySearchTree(BinarySearchTree *binarySearchTree)
 {
-    free(binaryTree);
+    free(binarySearchTree);
 }
 
 Node *newNode(int value)
@@ -23,7 +23,7 @@ Node *newNode(int value)
     return node;
 }
 
-void insertNode(BinaryTree *tree, Node *nodeToInsert)
+void insertNode(BinarySearchTree *tree, Node *nodeToInsert)
 {
     if (tree == NULL || nodeToInsert == NULL)
         return;
@@ -54,7 +54,7 @@ void recursiveInsertNode(Node *current, Node *nodeToInsert)
     }
 }
 
-Node *searchNode(BinaryTree *tree, int value)
+Node *searchNode(BinarySearchTree *tree, int value)
 {
     if (tree == NULL)
         return NULL;
